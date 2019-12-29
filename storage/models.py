@@ -5,7 +5,7 @@ from django.db import models
 class Storage(models.Model):
 	key = models.CharField(max_length=10,blank=True, null=True)
 	value = models.CharField(max_length=10,blank=True, null=True)
-	updated_at = models.DateTimeField()
+	updated_at = models.DateTimeField(auto_now_add=True)
 
 	class Meta:
 		verbose_name = 'Storage'

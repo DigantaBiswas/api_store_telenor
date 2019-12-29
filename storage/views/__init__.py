@@ -1,1 +1,1 @@
-from . api_view import StorageView
+from . api_view import *
