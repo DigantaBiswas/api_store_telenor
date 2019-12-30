@@ -12,7 +12,7 @@ class StorageView(viewsets.ModelViewSet):
     serializer_class = StorageSerializer
 
 
-class ListStorageView(generics.ListAPIView):
+class ListStorageView(generics.ListCreateAPIView):
     serializer_class = StorageSerializer
 
     def get_queryset(self):
@@ -27,3 +27,21 @@ class ListStorageView(generics.ListAPIView):
             return qs
         except:
             return qs
+
+    def perform_create(self, serializer):
+        print("data POST")
+        # The request user is set as author automatically.
+        # serializer.save(author=self.request.data)
+        # print(self.request.data)
+        data = self.request.data
+        list_obj = []
+        for i in data:
+            obj_storage = Storage()
+            obj_storage.key = i
+            obj_storage.value = data[i]
+            # print('key:',i ,'value:',data[i])
+            list_obj.append(obj_storage)
+        Storage.objects.bulk_create(list_obj)
+
+    def perform_update(self, serializer):
+        print('UPDATE')
